@@ -1,0 +1,26 @@
+## Interface: 16001
+## Title: Smart Gear Switcher
+## Notes: One button per equipment set: equips it, and saves or re-equips it when you changed it. Marks the set you're wearing on your action bars.
+## Notes-deDE: Ein Button pro Ausrüstungsset: legt es an und speichert es oder legt es wieder an, wenn du es verändert hast. Markiert das getragene Set auf deinen Aktionsleisten.
+## Notes-frFR: Un bouton par ensemble d'équipement : l'équipe, puis l'enregistre ou le rééquipe si vous l'avez modifié. Marque l'ensemble porté sur vos barres d'action.
+## Notes-esES: Un botón por conjunto de equipo: lo equipa y lo guarda o lo vuelve a equipar si lo has modificado. Marca en tus barras de acción el conjunto que llevas puesto.
+## Notes-esMX: Un botón por conjunto de equipo: lo equipa y lo guarda o lo vuelve a equipar si lo modificaste. Marca en tus barras de acción el conjunto que llevas puesto.
+## Notes-ptBR: Um botão por conjunto de equipamento: equipa o conjunto e o salva ou reequipa quando você o altera. Marca nas barras de ação o conjunto que você está usando.
+## Notes-ruRU: Одна кнопка на комплект экипировки: надевает его, а если вы его изменили, сохраняет или надевает снова. Отмечает надетый комплект на панелях команд.
+## Notes-koKR: 장비 구성마다 버튼 하나: 세트를 착용하고, 변경했다면 저장하거나 다시 착용합니다. 착용 중인 세트를 행동 단축바에 표시합니다.
+## Notes-zhCN: 每个装备方案一个按钮：装备该方案，改动后可保存或重新装备。在动作条上标记你正穿着的方案。
+## Notes-zhTW: 每套裝備設定一個按鈕：裝備該設定，變更後可儲存或重新裝備。在快捷列上標示你正穿著的設定。
+## Author: byWulf
+## Version: @project-version@
+## X-License: MIT
+## SavedVariables: SmartGearSwitcherDB
+## SavedVariablesPerCharacter: SmartGearSwitcherCharDB
+## IconTexture: Interface\Icons\INV_Chest_Plate06
+
+Locales.lua
+Core.lua
+Macros.lua
+Buttons.lua
+Dialog.lua
+EquipmentManager.lua
+Options.lua

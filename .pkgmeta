@@ -1,0 +1,5 @@
+package-as: SmartGearSwitcher
+
+ignore:
+  - AGENTS.md
+  - CLAUDE.md
