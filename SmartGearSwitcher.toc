@@ -13,6 +13,7 @@
 ## Author: byWulf
 ## Version: @project-version@
 ## X-License: MIT
+## X-Curse-Project-ID: 1788950
 ## SavedVariables: SmartGearSwitcherDB
 ## SavedVariablesPerCharacter: SmartGearSwitcherCharDB
 ## IconTexture: Interface\Icons\INV_Chest_Plate06

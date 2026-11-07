@@ -42,7 +42,7 @@ There is no automated test setup. Changes are verified in game with `/reload`; L
 
 ## Releasing
 
-Releases are built by `.github/workflows/release.yml` with the BigWigs packager (`.pkgmeta` sets the folder name and leaves out `AGENTS.md`/`CLAUDE.md`). The CurseForge project doesn't exist yet; once it does, add `## X-Curse-Project-ID: <ID>` to the TOC and the CurseForge link to the README installation section.
+Published on CurseForge as project `1788950` (https://www.curseforge.com/wow/addons/smart-gear-switcher) and as GitHub releases. Releases are built by `.github/workflows/release.yml` with the BigWigs packager (`.pkgmeta` sets the folder name and leaves out `AGENTS.md`/`CLAUDE.md`).
 
 1. Commit and push the changes to `main`.
 2. Tag and push: `git tag -a vX.Y.Z -m "X.Y.Z"` and `git push origin vX.Y.Z` (semantic versioning).

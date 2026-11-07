@@ -22,6 +22,8 @@ Classic Era and other versions are not supported.
 
 ## Installation
 
+Install it from [CurseForge](https://www.curseforge.com/wow/addons/smart-gear-switcher), e.g. with the CurseForge app.
+
 For a manual installation, note that the folder in your AddOns directory **must** be named `SmartGearSwitcher`, otherwise WoW will not load the addon:
 
 ```bash
