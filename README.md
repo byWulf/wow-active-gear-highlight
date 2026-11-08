@@ -1,4 +1,4 @@
-# Smart Gear Switcher
+# Active Gear Highlight
 
 A World of Warcraft addon that turns each equipment set into one smart action button: it equips the set, and when you changed the set you're wearing, it offers to save the changes or re-equip the set. The button of the set you're wearing gets a thick border, so you always see which set you have on.
 
@@ -22,26 +22,26 @@ Classic Era and other versions are not supported.
 
 ## Installation
 
-Install it from [CurseForge](https://www.curseforge.com/wow/addons/smart-gear-switcher), e.g. with the CurseForge app.
+Install it from [CurseForge](https://www.curseforge.com/wow/addons/active-gear-highlight), e.g. with the CurseForge app.
 
-For a manual installation, note that the folder in your AddOns directory **must** be named `SmartGearSwitcher`, otherwise WoW will not load the addon:
+For a manual installation, note that the folder in your AddOns directory **must** be named `ActiveGearHighlight`, otherwise WoW will not load the addon:
 
 ```bash
 cd "C:/Program Files (x86)/World of Warcraft/_forever_/Interface/AddOns"
-git clone https://github.com/byWulf/wow-smart-gear-switcher.git SmartGearSwitcher
+git clone https://github.com/byWulf/wow-active-gear-highlight.git ActiveGearHighlight
 ```
 
-Alternatively, download the ZIP from the [releases](https://github.com/byWulf/wow-smart-gear-switcher/releases) and extract it into `Interface/AddOns`.
+Alternatively, download the ZIP from the [releases](https://github.com/byWulf/wow-active-gear-highlight/releases) and extract it into `Interface/AddOns`.
 
 Then `/reload` in game.
 
 ## Getting started
 
 1. Create your equipment sets as usual in the Equipment Manager of the character window.
-2. Drag a set from the Equipment Manager onto an action bar. You get a Smart Gear Switcher macro with the set's name and icon. (Shift-drag still gives Blizzard's own set button.)
+2. Drag a set from the Equipment Manager onto an action bar. You get an Active Gear Highlight macro with the set's name and icon. (Shift-drag still gives Blizzard's own set button.)
 3. Click it.
 
-The macros are character macros (`/sgs <set name>`), created when you first drag a set. You can also write them yourself.
+The macros are character macros (`/agh <set name>`), created when you first drag a set. You can also write them yourself.
 
 ## What a click does
 
@@ -72,7 +72,7 @@ The tooltip of a set button lists the changed slots and the click actions. Color
 
 ## Options
 
-Options > AddOns > Smart Gear Switcher, or `/sgs`.
+Options > AddOns > Active Gear Highlight, or `/agh`.
 
 - Ask before saving (when off, a click on a changed set saves right away)
 - Shift-click saves, Ctrl-click re-equips
@@ -85,14 +85,16 @@ Options > AddOns > Smart Gear Switcher, or `/sgs`.
 
 | Command | Effect |
 |---|---|
-| `/sgs <set>` | Equip the set, or save/re-equip it when you changed it (also `/smartgear`) |
-| `/sgs save <set>` | Save your current gear to the set |
-| `/sgs restore <set>` | Equip the set again (also `/sgs equip <set>`) |
-| `/sgs current` | Like `/sgs <set>` for the set you're wearing |
-| `/sgs macro <set>` | Put the set's macro on your cursor |
-| `/sgs macro` | Put the "Current set" macro on your cursor |
-| `/sgs options` | Open the options (also just `/sgs`) |
-| `/sgs help` | List the commands |
+| `/agh <set>` | Equip the set, or save/re-equip it when you changed it (also `/activegear`) |
+| `/agh save <set>` | Save your current gear to the set |
+| `/agh restore <set>` | Equip the set again (also `/agh equip <set>`) |
+| `/agh current` | Like `/agh <set>` for the set you're wearing |
+| `/agh macro <set>` | Put the set's macro on your cursor |
+| `/agh macro` | Put the "Current set" macro on your cursor |
+| `/agh options` | Open the options (also just `/agh`) |
+| `/agh help` | List the commands |
+
+The addon used to be called Smart Gear Switcher. Its old commands `/sgs` and `/smartgear` still work, and set macros written with them are switched to `/agh` automatically.
 
 ## Languages
 

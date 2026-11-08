@@ -6,7 +6,7 @@ local GetItemInfo = (C_Item and C_Item.GetItemInfo) or GetItemInfo
 local GetItemIcon = (C_Item and C_Item.GetItemIconByID) or GetItemIcon
 local RequestItem = C_Item and C_Item.RequestLoadItemDataByID
 
-ns.PREFIX = "|cff33ff99Smart Gear Switcher|r: "
+ns.PREFIX = "|cff33ff99Active Gear Highlight|r: "
 
 ns.DEFAULTS = {
     confirm = true,
@@ -447,9 +447,12 @@ function ns.HandleCommand(msg)
     end
 end
 
-SLASH_SMARTGEARSWITCHER1 = "/sgs"
-SLASH_SMARTGEARSWITCHER2 = "/smartgear"
-SlashCmdList.SMARTGEARSWITCHER = function(msg)
+SLASH_ACTIVEGEARHIGHLIGHT1 = "/agh"
+SLASH_ACTIVEGEARHIGHLIGHT2 = "/activegear"
+-- The commands of the addon's old name "Smart Gear Switcher", so existing macros keep working.
+SLASH_ACTIVEGEARHIGHLIGHT3 = "/sgs"
+SLASH_ACTIVEGEARHIGHLIGHT4 = "/smartgear"
+SlashCmdList.ACTIVEGEARHIGHLIGHT = function(msg)
     ns.HandleCommand(msg)
 end
 
@@ -457,16 +460,16 @@ end
 -- Events
 
 local function InitDB()
-    SmartGearSwitcherDB = SmartGearSwitcherDB or {}
+    ActiveGearHighlightDB = ActiveGearHighlightDB or {}
     for key, value in pairs(ns.DEFAULTS) do
-        if SmartGearSwitcherDB[key] == nil then
-            SmartGearSwitcherDB[key] = value
+        if ActiveGearHighlightDB[key] == nil then
+            ActiveGearHighlightDB[key] = value
         end
     end
-    SmartGearSwitcherCharDB = SmartGearSwitcherCharDB or {}
-    SmartGearSwitcherCharDB.names = SmartGearSwitcherCharDB.names or {}
-    ns.db = SmartGearSwitcherDB
-    ns.char = SmartGearSwitcherCharDB
+    ActiveGearHighlightCharDB = ActiveGearHighlightCharDB or {}
+    ActiveGearHighlightCharDB.names = ActiveGearHighlightCharDB.names or {}
+    ns.db = ActiveGearHighlightDB
+    ns.char = ActiveGearHighlightCharDB
 end
 
 local handlers = {}

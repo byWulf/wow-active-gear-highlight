@@ -1,4 +1,4 @@
-package-as: SmartGearSwitcher
+package-as: ActiveGearHighlight
 
 ignore:
   - AGENTS.md

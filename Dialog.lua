@@ -17,7 +17,7 @@ local function CreateButton(parent, text, onClick)
 end
 
 local function Create()
-    local frame = CreateFrame("Frame", "SmartGearSwitcherDialog", UIParent, "BackdropTemplate")
+    local frame = CreateFrame("Frame", "ActiveGearHighlightDialog", UIParent, "BackdropTemplate")
     frame:SetWidth(WIDTH)
     frame:SetPoint("TOP", UIParent, "TOP", 0, -135)
     frame:SetFrameStrata("DIALOG")

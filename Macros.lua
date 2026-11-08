@@ -6,15 +6,17 @@ local MAX_CHARACTER = MAX_CHARACTER_MACROS or 30
 local DEFAULT_ICON = 134400 -- INV_Misc_QuestionMark
 local MAX_NAME_LETTERS = 16
 
-local SLASH_NAMES = { sgs = true, smartgear = true }
+-- sgs and smartgear: the commands of the addon's old name "Smart Gear Switcher".
+local SLASH_NAMES = { agh = true, activegear = true, sgs = true, smartgear = true }
+local LEGACY_SLASH = { sgs = true, smartgear = true }
 
-ns.CURRENT_BODY = "/sgs current"
+ns.CURRENT_BODY = "/agh current"
 
 function ns.SetMacroBody(setName)
-    return "/sgs " .. setName
+    return "/agh " .. setName
 end
 
--- The argument of the first /sgs line of a macro, or nil for a macro that isn't ours.
+-- The argument of the first /agh line of a macro, or nil for a macro that isn't ours.
 function ns.ParseMacro(body)
     if type(body) ~= "string" then
         return nil
@@ -181,11 +183,25 @@ local function RenameSetMacros()
     end
 end
 
+-- Rewrites one-line macros of the old commands ("/sgs <set>", "/smartgear <set>") to "/agh <set>",
+-- so they are found and kept in sync like the macros created under the new name.
+local function MigrateLegacyMacros()
+    ForEachMacro(function(index)
+        local macroName, icon, body = GetMacroInfo(index)
+        body = body and strtrim(body)
+        local command, arg = (body or ""):match("^/(%S+)%s+([^\n]+)$")
+        if command and LEGACY_SLASH[command:lower()] then
+            EditMacro(index, macroName, icon, "/agh " .. strtrim(arg))
+        end
+    end)
+end
+
 function ns.SyncMacros()
     if not ns.macroSyncPending or InCombatLockdown() or not ns.char then
         return
     end
     ns.macroSyncPending = false
+    MigrateLegacyMacros()
     RenameSetMacros()
 
     local currentName, currentIcon = ns.SetInfo(ns.char.current)
@@ -203,7 +219,7 @@ function ns.SyncMacros()
                 EditMacro(index, macroName, wantIcon, body)
             end
         elseif body then
-            local setName = body:match("^/[Ss][Gg][Ss] (.+)$")
+            local setName = body:match("^/[Aa][Gg][Hh] (.+)$")
             local _, setIcon = ns.SetInfo(ns.SetByName(setName))
             if setIcon and icon ~= setIcon then
                 EditMacro(index, macroName, setIcon, body)

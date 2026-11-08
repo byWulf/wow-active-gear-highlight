@@ -10,8 +10,8 @@ local function OnDragStart(button, ...)
             return
         end
     end
-    if button.sgsOriginalDragStart then
-        button.sgsOriginalDragStart(button, ...)
+    if button.aghOriginalDragStart then
+        button.aghOriginalDragStart(button, ...)
     end
 end
 
@@ -25,11 +25,11 @@ local function OnEnter(button)
 end
 
 local function HookSetButton(button)
-    if button.sgsHooked then
+    if button.aghHooked then
         return
     end
-    button.sgsHooked = true
-    button.sgsOriginalDragStart = button:GetScript("OnDragStart")
+    button.aghHooked = true
+    button.aghOriginalDragStart = button:GetScript("OnDragStart")
     button:SetScript("OnDragStart", OnDragStart)
     button:HookScript("OnEnter", OnEnter)
 end

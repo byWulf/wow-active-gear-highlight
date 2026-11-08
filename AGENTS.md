@@ -6,12 +6,12 @@ All documentation in this repository (README, AGENTS.md, code comments, commit m
 
 ## Project
 
-WoW addon `SmartGearSwitcher` (shown as "Smart Gear Switcher"): one smart macro per equipment set that equips the set, or saves/re-equips it when the player changed the set they're wearing. Marks the button of the worn set on any action bar with a static border (and a glow while changed).
+WoW addon `ActiveGearHighlight` (shown as "Active Gear Highlight"): one smart macro per equipment set that equips the set, or saves/re-equips it when the player changed the set they're wearing. Marks the button of the worn set on any action bar with a static border (and a glow while changed).
 
-- `SmartGearSwitcher.toc`: addon manifest, interface `16001` (WoW Forever only, Classic Era is not supported), SavedVariables `SmartGearSwitcherDB` (account-wide options) and `SmartGearSwitcherCharDB` (per character: `current` = set ID of the worn set, `names[setID]` = last known set names for rename detection)
+- `ActiveGearHighlight.toc`: addon manifest, interface `16001` (WoW Forever only, Classic Era is not supported), SavedVariables `ActiveGearHighlightDB` (account-wide options) and `ActiveGearHighlightCharDB` (per character: `current` = set ID of the worn set, `names[setID]` = last known set names for rename detection)
 - `Locales.lua`: all user-facing strings. English is the base table, other locales only override keys. Exposed as `ns.L`. Covers every text locale of the WoW Forever client (product `wowf`, `supported_text_locales` in its product config): enUS, deDE, frFR, esES, esMX (copy of esES with a few overrides), ptBR, ruRU, koKR, zhCN, zhTW. There is no itIT client. The TOC has a localized `Notes-xxXX` for each.
-- `Core.lua`: options defaults, set helpers (`ns.Diff` compares equipped items with a set slot by slot, honoring ignored slots), tracking of the worn set, the actions (`ns.Smart`, `ns.Equip`, `ns.Save`, `ns.RequestSave`), the `/sgs` command and all events
-- `Macros.lua`: parsing `/sgs` macros, creating them (character macros first), and keeping them in sync (set icon, renamed sets, the "current set" macro's name and icon). Macros can't be created or edited in combat; syncing is deferred to `PLAYER_REGEN_ENABLED`.
+- `Core.lua`: options defaults, set helpers (`ns.Diff` compares equipped items with a set slot by slot, honoring ignored slots), tracking of the worn set, the actions (`ns.Smart`, `ns.Equip`, `ns.Save`, `ns.RequestSave`), the `/agh` command and all events
+- `Macros.lua`: parsing `/agh` macros, creating them (character macros first), and keeping them in sync (set icon, renamed sets, the "current set" macro's name and icon). Macros can't be created or edited in combat; syncing is deferred to `PLAYER_REGEN_ENABLED`.
 - `Buttons.lua`: finding action buttons of all bar addons (named lists, Blizzard's `ActionBarButtonEventsFrame.frames`, LibActionButton registries, plus one walk over all frames), reading the action slot of a button, the border/glow overlay, and the action tooltip hook (`GameTooltip:SetAction`)
 - `Dialog.lua`: the save/re-equip window listing the changed slots
 - `EquipmentManager.lua`: hooks `PaperDollEquipmentManagerPane_InitButton` so dragging a set from the Equipment Manager picks up our macro (Shift-drag keeps Blizzard's set button)
@@ -20,7 +20,7 @@ WoW addon `SmartGearSwitcher` (shown as "Smart Gear Switcher"): one smart macro 
 Key behavior:
 
 - "Worn set" = the set equipped last (`EQUIPMENT_SWAP_FINISHED` carries the set ID). If the gear stops matching it but matches another set exactly, that set takes over. During a swap (`EQUIPMENT_SWAP_PENDING` until `..._FINISHED`) nothing is re-evaluated.
-- A macro belongs to us when a line starts with `/sgs` or `/smartgear`. Managed set macros have the exact body `/sgs <set name>`; the "current set" macro is `/sgs current`. A set name always wins over the keywords (`save`, `restore`, `equip`, `macro`, `current`).
+- A macro belongs to us when a line starts with `/agh` or `/activegear`, or with `/sgs` or `/smartgear` (the commands of the old name "Smart Gear Switcher", still registered so old macros keep working). One-line macros with the old commands are rewritten to `/agh` on the next macro sync. Managed set macros have the exact body `/agh <set name>`; the "current set" macro is `/agh current`. A set name always wins over the keywords (`save`, `restore`, `equip`, `macro`, `current`).
 - Saving sets the save-ignore flags to the set's ignored slots, calls `C_EquipmentSet.SaveEquipmentSet`, then restores the previous flags (the Equipment Manager uses them for its own display).
 - None of the C_EquipmentSet functions used are protected in Forever, but armor can't be swapped in combat: equipping in combat is queued until combat ends.
 
@@ -32,9 +32,9 @@ When adding a user-facing string, add the key to the English base table and to e
 
 The addon is installed as a plain copy (not a clone) in:
 
-- `C:\Program Files (x86)\World of Warcraft\_forever_\Interface\AddOns\SmartGearSwitcher`
+- `C:\Program Files (x86)\World of Warcraft\_forever_\Interface\AddOns\ActiveGearHighlight`
 
-After changing the `.toc` or any `.lua`, copy them to the Forever installation. The folder name must stay `SmartGearSwitcher`.
+After changing the `.toc` or any `.lua`, copy them to the Forever installation. The folder name must stay `ActiveGearHighlight`.
 
 ## Testing
 
@@ -42,7 +42,7 @@ There is no automated test setup. Changes are verified in game with `/reload`; L
 
 ## Releasing
 
-Published on CurseForge as project `1788950` (https://www.curseforge.com/wow/addons/smart-gear-switcher) and as GitHub releases. Releases are built by `.github/workflows/release.yml` with the BigWigs packager (`.pkgmeta` sets the folder name and leaves out `AGENTS.md`/`CLAUDE.md`).
+Published on CurseForge as project `1788950` (https://www.curseforge.com/wow/addons/active-gear-highlight) and as GitHub releases. Releases are built by `.github/workflows/release.yml` with the BigWigs packager (`.pkgmeta` sets the folder name and leaves out `AGENTS.md`/`CLAUDE.md`).
 
 1. Commit and push the changes to `main`.
 2. Tag and push: `git tag -a vX.Y.Z -m "X.Y.Z"` and `git push origin vX.Y.Z` (semantic versioning).

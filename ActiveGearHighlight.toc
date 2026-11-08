@@ -1,5 +1,5 @@
 ## Interface: 16001
-## Title: Smart Gear Switcher
+## Title: Active Gear Highlight
 ## Notes: One button per equipment set: equips it, and saves or re-equips it when you changed it. Marks the set you're wearing on your action bars.
 ## Notes-deDE: Ein Button pro Ausrüstungsset: legt es an und speichert es oder legt es wieder an, wenn du es verändert hast. Markiert das getragene Set auf deinen Aktionsleisten.
 ## Notes-frFR: Un bouton par ensemble d'équipement : l'équipe, puis l'enregistre ou le rééquipe si vous l'avez modifié. Marque l'ensemble porté sur vos barres d'action.
@@ -14,8 +14,8 @@
 ## Version: @project-version@
 ## X-License: MIT
 ## X-Curse-Project-ID: 1788950
-## SavedVariables: SmartGearSwitcherDB
-## SavedVariablesPerCharacter: SmartGearSwitcherCharDB
+## SavedVariables: ActiveGearHighlightDB
+## SavedVariablesPerCharacter: ActiveGearHighlightCharDB
 ## IconTexture: Interface\Icons\INV_Chest_Plate06
 
 Locales.lua

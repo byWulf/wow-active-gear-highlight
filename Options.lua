@@ -1,7 +1,7 @@
 local _, ns = ...
 local L = ns.L
 
--- Options page in Blizzard's settings (Options > AddOns > Smart Gear Switcher).
+-- Options page in Blizzard's settings (Options > AddOns > Active Gear Highlight).
 
 local function OnChanged()
     ns.RestyleButtons()
@@ -21,7 +21,7 @@ function ns.InitOptions()
     end
 
     local function Register(key, varType, label)
-        local setting = Settings.RegisterAddOnSetting(category, "SmartGearSwitcher_" .. key, key, ns.db, varType,
+        local setting = Settings.RegisterAddOnSetting(category, "ActiveGearHighlight_" .. key, key, ns.db, varType,
             label, ns.DEFAULTS[key])
         setting:SetValueChangedCallback(OnChanged)
         return setting
