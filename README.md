@@ -9,6 +9,7 @@ A World of Warcraft addon that turns each equipment set into one smart action bu
 - **Drag from the Equipment Manager:** dragging a set out of the character window gives you its macro
 - **"Current set" button:** an optional macro that always shows the set you're wearing
 - **Works with your action bars:** Blizzard's bars, Bartender4, Dominos, ElvUI, EllesmereUI, DaylightUI and other bars built on LibActionButton
+- **Dual spec:** link a set to your primary or secondary talents, and its button switches your spec first and then equips the set
 - **Combat aware:** a set you click in combat is equipped as soon as combat ends
 - Available in all languages of the WoW Forever client
 
@@ -59,6 +60,17 @@ The macros are character macros (`/agh <set name>`), created when you first drag
 Saving keeps the slots that the set ignores ignored, just like the Equipment Manager.
 
 "The set you're wearing" is the set you equipped last, no matter how (macro, Blizzard's set button, Equipment Manager). It is remembered per character across sessions. When your gear exactly matches another set, that set becomes the one you're wearing.
+
+## Dual spec
+
+Once you have dual spec, a set can be linked to one of your two talent specs:
+
+1. Hover the set in the Equipment Manager and click its gear button.
+2. Under **Switch talent spec first**, pick your primary or secondary talents (or **Don't switch**).
+
+The set's icon in the Equipment Manager then shows a small 1 or 2. When that spec isn't active, clicking the set's button (or Ctrl-click, `/agh restore`) starts the spec switch first. When the switch is done, the click carries on as usual: it equips the set, or asks about your changes. If the switch is interrupted, e.g. because you move, the set isn't equipped. Shift-click only saves and never switches the spec.
+
+The link is stored per character by the addon. Switching your spec in the talent window doesn't equip anything.
 
 ## Border and glow
 

@@ -354,6 +354,10 @@ local function AddSetTooltip(tooltip, setID, kind, isCurrent)
     end
     if kind == "macro" then
         local db = ns.db
+        local specGroup = ns.SpecToSwitch(setID)
+        if specGroup then
+            tooltip:AddLine(L.TT_SPEC_SWITCH:format(ns.SpecName(specGroup)), 0.5, 0.8, 1)
+        end
         if not state then
             tooltip:AddLine(L.TT_CLICK_EQUIP, 0.5, 0.8, 1)
         elseif state ~= "worn" then

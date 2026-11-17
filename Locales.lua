@@ -48,6 +48,16 @@ local L = {
     TT_PANE_DRAG = "Drag: Active Gear Highlight macro",
     TT_PANE_SHIFT_DRAG = "Shift-drag: Blizzard's equipment set button",
 
+    -- dual spec: switching the talent spec before equipping a set
+    SPEC_PRIMARY = "Primary talents",
+    SPEC_SECONDARY = "Secondary talents",
+    SPEC_MENU_TITLE = "Switch talent spec first",
+    SPEC_NONE = "Don't switch",
+    MSG_SPEC_SWITCHING = "Switching to %s, then %s will be equipped.",
+    MSG_SPEC_INTERRUPTED = "The talent spec switch was interrupted, %s was not equipped.",
+    TT_SPEC = "Switches to %s before equipping",
+    TT_SPEC_SWITCH = "Click: switch to %s first",
+
     CURRENT_MACRO = "Current set",
 
     -- options
@@ -131,6 +141,15 @@ locales.deDE = {
     TT_PANE_DRAG = "Ziehen: Active-Gear-Highlight-Makro",
     TT_PANE_SHIFT_DRAG = "Shift-Ziehen: Blizzards Ausrüstungsset-Button",
 
+    SPEC_PRIMARY = "Primäre Talente",
+    SPEC_SECONDARY = "Sekundäre Talente",
+    SPEC_MENU_TITLE = "Vorher Spezialisierung wechseln",
+    SPEC_NONE = "Nicht wechseln",
+    MSG_SPEC_SWITCHING = "Wechsle zu %s, danach wird %s angelegt.",
+    MSG_SPEC_INTERRUPTED = "Der Wechsel der Spezialisierung wurde unterbrochen, %s wurde nicht angelegt.",
+    TT_SPEC = "Wechselt vor dem Anlegen zu %s",
+    TT_SPEC_SWITCH = "Klick: vorher zu %s wechseln",
+
     CURRENT_MACRO = "Aktuelles Set",
 
     OPT_HEADER_BEHAVIOR = "Verhalten",
@@ -210,6 +229,15 @@ locales.frFR = {
     TT_NO_SET = "Cet ensemble d'équipement n'existe pas.",
     TT_PANE_DRAG = "Glisser : macro Active Gear Highlight",
     TT_PANE_SHIFT_DRAG = "Maj-glisser : bouton d'ensemble d'équipement de Blizzard",
+
+    SPEC_PRIMARY = "Talents principaux",
+    SPEC_SECONDARY = "Talents secondaires",
+    SPEC_MENU_TITLE = "Changer d'abord de spécialisation",
+    SPEC_NONE = "Ne pas changer",
+    MSG_SPEC_SWITCHING = "Passage à %s, puis %s sera équipé.",
+    MSG_SPEC_INTERRUPTED = "Le changement de spécialisation a été interrompu, %s n'a pas été équipé.",
+    TT_SPEC = "Passe à %s avant d'équiper",
+    TT_SPEC_SWITCH = "Clic : passer d'abord à %s",
 
     CURRENT_MACRO = "Ensemble actuel",
 
@@ -291,6 +319,15 @@ locales.esES = {
     TT_PANE_DRAG = "Arrastrar: macro de Active Gear Highlight",
     TT_PANE_SHIFT_DRAG = "Mayús-arrastrar: botón de conjunto de equipo de Blizzard",
 
+    SPEC_PRIMARY = "Talentos principales",
+    SPEC_SECONDARY = "Talentos secundarios",
+    SPEC_MENU_TITLE = "Cambiar antes de especialización",
+    SPEC_NONE = "No cambiar",
+    MSG_SPEC_SWITCHING = "Cambiando a %s; después se equipará %s.",
+    MSG_SPEC_INTERRUPTED = "Se ha interrumpido el cambio de especialización, %s no se ha equipado.",
+    TT_SPEC = "Cambia a %s antes de equipar",
+    TT_SPEC_SWITCH = "Clic: cambiar primero a %s",
+
     CURRENT_MACRO = "Conjunto actual",
 
     OPT_HEADER_BEHAVIOR = "Comportamiento",
@@ -340,6 +377,7 @@ for key, value in pairs({
     MSG_SAVED = "Tu equipo actual se guardó en %s.",
     MSG_MACRO_FAILED = "No se pudo crear la macro.",
     DIALOG_CHANGED_TITLE = "%s se modificó",
+    MSG_SPEC_INTERRUPTED = "Se interrumpió el cambio de especialización, %s no se equipó.",
     HELP = {
         "|cffffd100/agh <conjunto>|r: equipar el conjunto, o guardarlo/volver a equiparlo si lo modificaste",
         "|cffffd100/agh save <conjunto>|r: guardar tu equipo actual en el conjunto",
@@ -391,6 +429,15 @@ locales.ptBR = {
     TT_NO_SET = "Este conjunto de equipamento não existe.",
     TT_PANE_DRAG = "Arrastar: macro do Active Gear Highlight",
     TT_PANE_SHIFT_DRAG = "Shift-arrastar: botão de conjunto de equipamento da Blizzard",
+
+    SPEC_PRIMARY = "Talentos primários",
+    SPEC_SECONDARY = "Talentos secundários",
+    SPEC_MENU_TITLE = "Trocar de especialização antes",
+    SPEC_NONE = "Não trocar",
+    MSG_SPEC_SWITCHING = "Trocando para %s; depois %s será equipado.",
+    MSG_SPEC_INTERRUPTED = "A troca de especialização foi interrompida, %s não foi equipado.",
+    TT_SPEC = "Troca para %s antes de equipar",
+    TT_SPEC_SWITCH = "Clique: trocar primeiro para %s",
 
     CURRENT_MACRO = "Conjunto atual",
 
@@ -471,6 +518,15 @@ locales.ruRU = {
     TT_NO_SET = "Такого комплекта экипировки не существует.",
     TT_PANE_DRAG = "Перетаскивание: макрос Active Gear Highlight",
     TT_PANE_SHIFT_DRAG = "Shift-перетаскивание: кнопка комплекта Blizzard",
+
+    SPEC_PRIMARY = "Основные таланты",
+    SPEC_SECONDARY = "Дополнительные таланты",
+    SPEC_MENU_TITLE = "Сначала сменить специализацию",
+    SPEC_NONE = "Не менять",
+    MSG_SPEC_SWITCHING = "Смена на %s, затем будет надет комплект %s.",
+    MSG_SPEC_INTERRUPTED = "Смена специализации прервана, комплект %s не надет.",
+    TT_SPEC = "Перед надеванием переключает на %s",
+    TT_SPEC_SWITCH = "Щелчок: сначала переключиться на %s",
 
     CURRENT_MACRO = "Текущий комплект",
 
@@ -553,6 +609,15 @@ locales.koKR = {
     TT_PANE_DRAG = "끌기: Active Gear Highlight 매크로",
     TT_PANE_SHIFT_DRAG = "Shift-끌기: 블리자드 장비 구성 버튼",
 
+    SPEC_PRIMARY = "주 특성",
+    SPEC_SECONDARY = "보조 특성",
+    SPEC_MENU_TITLE = "먼저 전문화 변경",
+    SPEC_NONE = "변경 안 함",
+    MSG_SPEC_SWITCHING = "%s(으)로 전환한 뒤 %s 세트를 착용합니다.",
+    MSG_SPEC_INTERRUPTED = "전문화 변경이 중단되어 %s 세트를 착용하지 않았습니다.",
+    TT_SPEC = "착용 전에 %s(으)로 전환",
+    TT_SPEC_SWITCH = "클릭: 먼저 %s(으)로 전환",
+
     CURRENT_MACRO = "현재 세트",
 
     OPT_HEADER_BEHAVIOR = "동작",
@@ -633,6 +698,15 @@ locales.zhCN = {
     TT_PANE_DRAG = "拖动：Active Gear Highlight 宏",
     TT_PANE_SHIFT_DRAG = "Shift-拖动：暴雪的装备方案按钮",
 
+    SPEC_PRIMARY = "主天赋",
+    SPEC_SECONDARY = "副天赋",
+    SPEC_MENU_TITLE = "先切换天赋",
+    SPEC_NONE = "不切换",
+    MSG_SPEC_SWITCHING = "正在切换到%s，随后装备%s。",
+    MSG_SPEC_INTERRUPTED = "天赋切换被打断，未装备%s。",
+    TT_SPEC = "装备前切换到%s",
+    TT_SPEC_SWITCH = "点击：先切换到%s",
+
     CURRENT_MACRO = "当前方案",
 
     OPT_HEADER_BEHAVIOR = "行为",
@@ -712,6 +786,15 @@ locales.zhTW = {
     TT_NO_SET = "此裝備設定不存在。",
     TT_PANE_DRAG = "拖曳：Active Gear Highlight 巨集",
     TT_PANE_SHIFT_DRAG = "Shift-拖曳：暴雪的裝備設定按鈕",
+
+    SPEC_PRIMARY = "主要天賦",
+    SPEC_SECONDARY = "次要天賦",
+    SPEC_MENU_TITLE = "先切換天賦",
+    SPEC_NONE = "不切換",
+    MSG_SPEC_SWITCHING = "正在切換到%s，接著裝備%s。",
+    MSG_SPEC_INTERRUPTED = "天賦切換被打斷，未裝備%s。",
+    TT_SPEC = "裝備前切換到%s",
+    TT_SPEC_SWITCH = "點擊：先切換到%s",
 
     CURRENT_MACRO = "目前設定",
 

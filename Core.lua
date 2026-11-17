@@ -185,6 +185,118 @@ function ns.StateOf(setID)
 end
 
 ---------------------------------------------------------------------------
+-- Talent specs (dual spec): a set can be linked to spec group 1 (primary) or 2 (secondary). Equipping it switches
+-- to that spec first and equips the set once the switch is done. The link is stored per character in
+-- ActiveGearHighlightCharDB.specs[setID]; Blizzard's own spec assignment of equipment sets is left alone.
+
+local SPEC = C_SpecializationInfo
+-- How long a started spec switch may take before it is given up (the switch is a cast of a few seconds).
+local SPEC_TIMEOUT = 30
+
+function ns.HasDualSpec()
+    return type(GetNumSpecGroups) == "function" and (GetNumSpecGroups() or 0) > 1
+        and SPEC and SPEC.GetActiveSpecGroup and SPEC.SetActiveSpecGroup and true or false
+end
+
+function ns.ActiveSpecGroup()
+    return SPEC and SPEC.GetActiveSpecGroup and SPEC.GetActiveSpecGroup() or 1
+end
+
+function ns.SpecName(group)
+    if group == 1 then
+        return DUAL_SPEC_PRIMARY or L.SPEC_PRIMARY
+    end
+    return DUAL_SPEC_SECONDARY or L.SPEC_SECONDARY
+end
+
+function ns.SpecLabel(group)
+    return "|cffffd100" .. ns.SpecName(group) .. "|r"
+end
+
+-- The spec group the set is linked to, or nil.
+function ns.SetSpec(setID)
+    local group = setID and ns.char.specs[setID]
+    if group == 1 or group == 2 then
+        return group
+    end
+    return nil
+end
+
+-- group 1 or 2 links the set, anything else removes the link.
+function ns.SetSpecLink(setID, group)
+    if not ns.SetExists(setID) then
+        return
+    end
+    ns.char.specs[setID] = (group == 1 or group == 2) and group or nil
+    ns.UpdatePaneSpecBadges()
+end
+
+-- Links of sets that were deleted go away, so a new set that gets the same ID doesn't inherit them.
+function ns.CleanSpecLinks()
+    if #ns.SetIDs() == 0 then
+        return -- not loaded yet, or no sets
+    end
+    for setID in pairs(ns.char.specs) do
+        if not ns.SetExists(setID) then
+            ns.char.specs[setID] = nil
+        end
+    end
+end
+
+-- The spec group to switch to before equipping the set, or nil when no switch is needed.
+function ns.SpecToSwitch(setID)
+    local group = ns.SetSpec(setID)
+    if group and ns.HasDualSpec() and ns.ActiveSpecGroup() ~= group then
+        return group
+    end
+    return nil
+end
+
+-- Called on the talent events: once the spec of a started switch is active, run what was waiting for it.
+function ns.CheckSpecSwitch()
+    local pending = ns.pendingSpec
+    if not pending then
+        return
+    end
+    if GetTime() - pending.started > SPEC_TIMEOUT then
+        ns.pendingSpec = nil
+        return
+    end
+    if ns.ActiveSpecGroup() == pending.group then
+        ns.pendingSpec = nil
+        -- Give the client a moment to settle after the switch before swapping gear.
+        C_Timer.After(0.5, function()
+            pending.after(pending.setID)
+        end)
+    end
+end
+
+-- The cast of the spec switch, to notice when it is interrupted.
+function ns.OnSpellcastStart(castGUID)
+    local pending = ns.pendingSpec
+    if pending and not pending.castGUID and GetTime() - pending.started < 1 then
+        pending.castGUID = castGUID
+    end
+end
+
+-- failed: the cast could not even start (e.g. while moving or casting something else); that comes before any
+-- UNIT_SPELLCAST_START, so right after the request it is taken as the spec switch failing.
+function ns.OnSpellcastStopped(castGUID, failed)
+    local pending = ns.pendingSpec
+    if not pending then
+        return
+    end
+    local ours = castGUID and pending.castGUID == castGUID
+    if not ours and failed and not pending.castGUID and GetTime() - pending.started < 1 then
+        ours = true
+    end
+    if ours then
+        ns.pendingSpec = nil
+        ns.Print(L.MSG_SPEC_INTERRUPTED:format(ns.SetLabel(pending.setID)))
+    end
+end
+
+---------------------------------------------------------------------------
 -- Item and slot texts
 
 function ns.SlotName(slot)
@@ -223,8 +335,36 @@ local function InCombat()
     return InCombatLockdown() or UnitAffectingCombat("player")
 end
 
+-- When the set is linked to a spec that isn't active, starts the switch to that spec and runs after(setID) once it is
+-- done. Returns true when it took over (or queued the set for after combat), false when no switch is needed.
+local function SwitchSpecFirst(setID, after)
+    local group = ns.SpecToSwitch(setID)
+    if not group then
+        return false
+    end
+    if InCombat() then
+        ns.pendingEquip = setID
+        ns.Print(L.MSG_QUEUED:format(ns.SetLabel(setID)))
+        return true
+    end
+    local pending = ns.pendingSpec
+    if pending and pending.group == group and GetTime() - pending.started < SPEC_TIMEOUT then
+        -- The switch to this spec is already running: only change what comes after it.
+        pending.setID, pending.after = setID, after
+        return true
+    end
+    ns.pendingEquip = nil
+    ns.pendingSpec = { setID = setID, group = group, after = after, started = GetTime() }
+    ns.Info(L.MSG_SPEC_SWITCHING:format(ns.SpecLabel(group), ns.SetLabel(setID)))
+    SPEC.SetActiveSpecGroup(group)
+    return true
+end
+
 function ns.Equip(setID)
     if not ns.SetExists(setID) then
+        return
+    end
+    if SwitchSpecFirst(setID, ns.Equip) then
         return
     end
     if MatchesExactly(setID) then
@@ -302,6 +442,10 @@ function ns.Smart(setID)
     end
     if ns.db.ctrlRestores and IsControlKeyDown() then
         ns.Equip(setID)
+        return
+    end
+    -- Switch the spec first; afterwards the click goes on as usual (equip, or ask about changes).
+    if SwitchSpecFirst(setID, ns.Smart) then
         return
     end
     ns.UpdateCurrent()
@@ -468,6 +612,7 @@ local function InitDB()
     end
     ActiveGearHighlightCharDB = ActiveGearHighlightCharDB or {}
     ActiveGearHighlightCharDB.names = ActiveGearHighlightCharDB.names or {}
+    ActiveGearHighlightCharDB.specs = ActiveGearHighlightCharDB.specs or {}
     ns.db = ActiveGearHighlightDB
     ns.char = ActiveGearHighlightCharDB
 end
@@ -511,6 +656,7 @@ function handlers.EQUIPMENT_SWAP_FINISHED(_, setID)
 end
 
 function handlers.EQUIPMENT_SETS_CHANGED()
+    ns.CleanSpecLinks()
     ns.RequestMacroSync()
     ns.RequestRefresh()
 end
@@ -533,6 +679,16 @@ end
 handlers.PLAYER_EQUIPMENT_CHANGED = ns.RequestRefresh
 handlers.BAG_UPDATE_DELAYED = ns.RequestRefresh
 
+-- Any of these may report the end of a spec switch; ns.CheckSpecSwitch looks at the active spec group itself.
+local function SpecChanged()
+    ns.CheckSpecSwitch()
+    ns.UpdatePaneSpecBadges()
+end
+handlers.ACTIVE_TALENT_GROUP_CHANGED = SpecChanged
+handlers.PLAYER_SPECIALIZATION_CHANGED = SpecChanged
+handlers.PLAYER_TALENT_UPDATE = SpecChanged
+handlers.TRAIT_CONFIG_UPDATED = SpecChanged
+
 local function ButtonsChanged()
     ns.RequestButtonUpdate()
 end
@@ -552,4 +708,20 @@ frame:SetScript("OnEvent", function(_, event, ...)
         return
     end
     handlers[event](...)
+end)
+
+-- The player's own casts, to notice an interrupted spec switch.
+local castFrame = CreateFrame("Frame")
+for _, event in ipairs({ "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_INTERRUPTED", "UNIT_SPELLCAST_FAILED" }) do
+    pcall(castFrame.RegisterUnitEvent, castFrame, event, "player")
+end
+castFrame:SetScript("OnEvent", function(_, event, _, castGUID)
+    if not ns.pendingSpec then
+        return
+    end
+    if event == "UNIT_SPELLCAST_START" then
+        ns.OnSpellcastStart(castGUID)
+    else
+        ns.OnSpellcastStopped(castGUID, event == "UNIT_SPELLCAST_FAILED")
+    end
 end)
